@@ -1,15 +1,16 @@
 const { Server } = require("socket.io");
 
-const express = require('express')
-const port = 3000
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const express = require("express");
+const app = express();
+const port = 4000;
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 const io = new Server(8000, {
   cors: true,
@@ -46,15 +47,15 @@ io.on("connection", (socket) => {
     io.to(to).emit("incoming:call", { from: socket.id, offer });
   });
 
-  socket.on("call:accepted", ({to, ans}) => {
-    io.to(to).emit("call:accepted", { from: socket.id, ans })
-  })
-
-  socket.on("peer:nego:needed", ({to, offer}) => {
-    io.to(to).emit("peer:nego:needed", { from: socket.id, offer })
+  socket.on("call:accepted", ({ to, ans }) => {
+    io.to(to).emit("call:accepted", { from: socket.id, ans });
   });
 
-  socket.on("peer:nego:done", ({to, ans}) => {
-    io.to(to).emit("peer:nego:final", { from: socket.id, ans })
-  })
+  socket.on("peer:nego:needed", ({ to, offer }) => {
+    io.to(to).emit("peer:nego:needed", { from: socket.id, offer });
+  });
+
+  socket.on("peer:nego:done", ({ to, ans }) => {
+    io.to(to).emit("peer:nego:final", { from: socket.id, ans });
+  });
 });
