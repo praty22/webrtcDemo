@@ -1,5 +1,17 @@
 const { Server } = require("socket.io");
 
+const express = require('express')
+const app = express()
+
+// respond with "hello world" when a GET request is made to the homepage
+app.get('/status', (req, res) => {
+  res.send('server endpoint')
+})
+
+app.get('/', (req, res) => {
+    res.send('server is up')
+  })
+
 const io = new Server(8000, {
   cors: true,
 });
