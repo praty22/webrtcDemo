@@ -1,16 +1,15 @@
 const { Server } = require("socket.io");
 
 const express = require('express')
-const app = express()
-
-// respond with "hello world" when a GET request is made to the homepage
-app.get('/status', (req, res) => {
-  res.send('server endpoint')
-})
+const port = 3000
 
 app.get('/', (req, res) => {
-    res.send('server is up')
-  })
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
 
 const io = new Server(8000, {
   cors: true,
